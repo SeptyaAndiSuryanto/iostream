@@ -5,15 +5,17 @@ public class stream {
 	public void unbuffer () throws IOException{
 		FileInputStream in = null;
         FileOutputStream out = null;
+        byte [] buf = new byte[10];
         long start = System.nanoTime();
         try {
-            in = new FileInputStream("code.png");
-            out = new FileOutputStream("outcode.png");
+            in = new FileInputStream("rockabaye.mp3");
+            out = new FileOutputStream("outbuffrockabaye.mp3");
             int c;
-
-            while ((c = in.read()) != -1) {
-                out.write(c);
+            while ((c = in.read(buf)) != -1) {
+                out.write(buf);
+                
             }
+            out.flush();
         } finally {
             if (in != null) {
                 in.close();
@@ -32,16 +34,15 @@ public class stream {
 		OutputStream out = null;
 		BufferedInputStream buin = null;
 		BufferedOutputStream buot = null;
-		byte[] buf = new byte[999999999];
         long start = System.nanoTime();
 		try{
-			in = new FileInputStream("code.png");
-			buin = new BufferedInputStream(in);
-			out = new FileOutputStream("outcodebuff.png");
-			buot = new BufferedOutputStream(out);
+			in = new FileInputStream("rockabaye.mp3");
+			buin = new BufferedInputStream(in,2048);
+			out = new FileOutputStream("200outbuffrockabaye.mp3");
+			buot = new BufferedOutputStream(out,1024);
 			int c;
-			while ((c=buin.read(buf)) !=-1){
-				buot.write(buf, 0, c);
+			while ((c=buin.read()) !=-1){
+				buot.write(c);
 			}
 			buot.flush();
 			buot.close();
